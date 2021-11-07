@@ -17,6 +17,7 @@ void wypisz(int tab[], int rozmiar, double czas, string algorytm);
 
 void brute_force(int tab[], int rozmiar);
 void bucket_sort(int tab[], int rozmiar);
+void bucket_sort2(int tab[], int rozmiar);
 
 int main(){
 	
@@ -31,12 +32,37 @@ int main(){
 	
 
 	start = clock();
+
 	//jakiœ sort
 	//czy inny algorytm
+	
+	bucket_sort2(tablica, rozmiar);
+	
+	
+	
 	stop = clock();
 	double czas = (stop - start) / CLOCKS_PER_SEC;
 
 	wypisz(tablica, rozmiar,czas, "brak");
+
+
+	/*
+	//_____________________________________________________________________________
+	start = clock();
+
+	//jakiœ sort
+	//czy inny algorytm
+
+	brute_force(tablica, rozmiar);
+
+
+
+	stop = clock();
+	czas = (stop - start) / CLOCKS_PER_SEC;
+
+	wypisz(tablica, rozmiar, czas, "brak");
+	//_____________________________________________________________________________
+	*/
 
 	cout << endl << "Algorytm zaj¹³: " << czas;
     cout << "s. Przy rozmiarze tablicy: " << rozmiar << "." << endl;
@@ -63,6 +89,8 @@ void wypisz(int tab[], int rozmiar, double czas, string algorytm)
 	for (int i = 0; i < rozmiar; i++)
 	{
 		cout << tab[i] << setw(5);
+
+		if (i % 30 == 0) cout << endl;
 	}
 
 	ofstream dane;
@@ -77,6 +105,8 @@ void brute_force(int tab[], int rozmiar)
 	int szukaj;
 	int porownaj;
 
+	bool flaga=false;
+
 	for (int i = 0; i < rozmiar; i++)
 	{
 		szukaj = tab[i];
@@ -89,10 +119,13 @@ void brute_force(int tab[], int rozmiar)
 			if (porownaj == 2)
 			{
 				cout << "liczba która sie powtarza to: " << szukaj << ". \n";
+				flaga = true;
 				break;
 			}
 			
 		}
+
+		if (!flaga) cout << "\n Nie znaleziono liczby powtarzaj¹cej sie. \n";
 
 	}
 }
@@ -104,19 +137,72 @@ void bucket_sort(int tab[], int rozmiar)
 	//pozycja zerowa nowej tablicy zawsze pozostanie pusta i bêdzie ignorowana
 
 	int* buckets = new int[rozmiar + 1];
-	buckets = { 0 };
 
-	for (int i = 0; i < rozmiar; i++)
+	for(int i = 0; i <= rozmiar+1; i++)
+	{
+		buckets[i] = 0;
+	}
+
+
+
+	bool flaga = false;
+
+	for(int i = 0; i < rozmiar; i++)
 	{
 		buckets[tab[i]]++;
 
-		if (buckets[tab[i]] = 2) 
+		if (buckets[tab[i]] == 2) 
 		{
-			cout << "liczba która sie powtarza to: " << tab[i] << ". \n";
+			flaga = true;
 			break;
 		}
 
 	}
 
+	if (flaga==false) cout << "\n Nie znaleziono liczby powtarzajacej sie. \n";
+}
 
+void bucket_sort2(int tab[], int rozmiar)
+{
+	int* buckets = new int[rozmiar + 1];
+
+	for (int i = 0; i <= rozmiar + 1; i++)
+	{
+		//cout << "ok ";
+		buckets[i] = 0;
+	}
+
+	int porownaj=0;
+	int poz = 0;
+
+
+	bool flaga = false;
+
+	cout << "ok\n";
+
+	for (int i = 0; i < rozmiar; i++)
+	{
+		poz = tab[i];
+		buckets[poz]++;
+	}
+
+	cout << "najwieksza\n";
+	for (int i = 0; i <=rozmiar+1; i++)
+	{
+		if (buckets[i] >= 2)
+		{
+			flaga = true;
+
+			cout << "Liczba " << i << " wystapila: " << buckets[i] << " razy. \n";
+
+			if (buckets[i] > buckets[porownaj])
+				porownaj = i;
+		}
+
+	}
+
+	cout << "\n \n Najwiecej razy wystapila liczba: ";
+	cout << porownaj << ": " << buckets[porownaj] << " razy. \n \n";
+
+	if (flaga == false) cout << "\n Nie znaleziono liczby powtarzajacej sie. \n";
 }
