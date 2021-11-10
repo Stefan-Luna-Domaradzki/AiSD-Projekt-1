@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <iomanip>
+#include <chrono>
 
 using namespace std;
 
@@ -32,24 +33,24 @@ int main(){
 	
 	rozmiar = 10;
 
-	//for (int i = 1; i < 10; i++)
-	//{
+	for (int i = 1; i < 8; i++)
+	{
 		rozmiar = 10 * rozmiar;
 		tablica = new int [rozmiar];
 		wypelnij(tablica, rozmiar);
 
 		start = clock();
 
-		bucket_sort2(tablica, rozmiar);
+		brute_force(tablica, rozmiar);
 
 		stop = clock();
-		czas = (stop - start) / CLOCKS_PER_SEC;
+		czas = ((stop - start)*1000) / (CLOCKS_PER_SEC);
 
 		wypisz(tablica, rozmiar, czas, "brute");
-	//}
+	}
 
 	cout << endl << "Algorytm zaj¹³: " << czas;
-    cout << "s. Przy rozmiarze tablicy: " << rozmiar << "." << endl;
+    cout << "ms. Przy rozmiarze tablicy: " << rozmiar << "." << endl;
 
 
 	system("Pause");
@@ -78,12 +79,12 @@ void wypelnij(int tab[], int rozmiar)
 
 void wypisz(int tab[], int rozmiar, double czas, string algorytm)
 {
-	for (int i = 0; i < rozmiar; i++)
+	/*for (int i = 0; i < rozmiar; i++)
 	{
 		cout << tab[i] << setw(5);
 
 		if (i % 30 == 0) cout << endl;
-	}
+	}*/
 
 	ofstream dane;
 	dane.open("dane.txt", ios::app);
@@ -120,10 +121,10 @@ void brute_force(int tab[], int rozmiar)
 			
 		}
 
-		if (!flaga) cout << "\n Nie znaleziono liczby powtarzaj¹cej sie. \n";
-		else cout << "\n Powtarza sie: " << powtarzajaca << ". \n";
 
 	}
+		if (!flaga) cout << "\n Nie znaleziono liczby powtarzaj¹cej sie. \n";
+		else cout << "\n Powtarza sie: " << powtarzajaca << ". \n";
 }
 
 void bucket_sort(int tab[], int rozmiar)
