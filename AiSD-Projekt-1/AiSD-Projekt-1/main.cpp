@@ -24,45 +24,29 @@ int main(){
 	int rozmiar;
 	int *tablica;
 	clock_t start, stop;
+	double czas;
 
-	cout << "Podaj rozmiar tablicy: "; cin >> rozmiar;
-	tablica = new int [rozmiar];
-	
-	wypelnij(tablica, rozmiar);
-	
-
-	start = clock();
-
-	//jakiœ sort
-	//czy inny algorytm
-	
-	bucket_sort2(tablica, rozmiar);
+	//cout << "Podaj rozmiar tablicy: "; cin >> rozmiar;
 	
 	
 	
-	stop = clock();
-	double czas = (stop - start) / CLOCKS_PER_SEC;
+	rozmiar = 10;
 
-	wypisz(tablica, rozmiar,czas, "brak");
+	//for (int i = 1; i < 10; i++)
+	//{
+		rozmiar = 10 * rozmiar;
+		tablica = new int [rozmiar];
+		wypelnij(tablica, rozmiar);
 
+		start = clock();
 
-	/*
-	//_____________________________________________________________________________
-	start = clock();
+		bucket_sort2(tablica, rozmiar);
 
-	//jakiœ sort
-	//czy inny algorytm
+		stop = clock();
+		czas = (stop - start) / CLOCKS_PER_SEC;
 
-	brute_force(tablica, rozmiar);
-
-
-
-	stop = clock();
-	czas = (stop - start) / CLOCKS_PER_SEC;
-
-	wypisz(tablica, rozmiar, czas, "brak");
-	//_____________________________________________________________________________
-	*/
+		wypisz(tablica, rozmiar, czas, "brute");
+	//}
 
 	cout << endl << "Algorytm zaj¹³: " << czas;
     cout << "s. Przy rozmiarze tablicy: " << rozmiar << "." << endl;
@@ -80,7 +64,15 @@ void wypelnij(int tab[], int rozmiar)
 	srand(time(NULL));
 	for (int i = 0; i < rozmiar; i++)
 	{
-		tab[i] = rand()% rozmiar + 1;
+		tab[i] = rand()% rozmiar;
+		if (tab[i] == 0) {
+			while (true) 
+			{
+				tab[i] = rand() % rozmiar;
+				if (tab[i]) break;
+			}
+		}
+		
 	}
 }
 
@@ -105,6 +97,8 @@ void brute_force(int tab[], int rozmiar)
 	int szukaj;
 	int porownaj;
 
+	int powtarzajaca;
+
 	bool flaga=false;
 
 	for (int i = 0; i < rozmiar; i++)
@@ -118,14 +112,16 @@ void brute_force(int tab[], int rozmiar)
 
 			if (porownaj == 2)
 			{
-				cout << "liczba która sie powtarza to: " << szukaj << ". \n";
+				//cout << "liczba która sie powtarza to: " << szukaj << ". \n";
 				flaga = true;
+				powtarzajaca = szukaj;
 				break;
 			}
 			
 		}
 
 		if (!flaga) cout << "\n Nie znaleziono liczby powtarzaj¹cej sie. \n";
+		else cout << "\n Powtarza sie: " << powtarzajaca << ". \n";
 
 	}
 }
@@ -136,9 +132,11 @@ void bucket_sort(int tab[], int rozmiar)
 	//tablica wymagana do sortowania kube³kowego powinna byæ rozmiaru n
 	//pozycja zerowa nowej tablicy zawsze pozostanie pusta i bêdzie ignorowana
 
-	int* buckets = new int[rozmiar + 1];
+	int powtarzajaca;
 
-	for(int i = 0; i <= rozmiar+1; i++)
+	int* buckets = new int[rozmiar];
+
+	for(int i = 0; i < rozmiar; i++)
 	{
 		buckets[i] = 0;
 	}
@@ -154,19 +152,22 @@ void bucket_sort(int tab[], int rozmiar)
 		if (buckets[tab[i]] == 2) 
 		{
 			flaga = true;
+			powtarzajaca = tab[i];
 			break;
 		}
 
 	}
 
-	if (flaga==false) cout << "\n Nie znaleziono liczby powtarzajacej sie. \n";
+	if (!flaga) cout << "\n Nie znaleziono liczby powtarzajacej sie. \n";
+	else cout << "\n Powtarza sie: " << powtarzajaca << ". \n";
+
 }
 
 void bucket_sort2(int tab[], int rozmiar)
 {
-	int* buckets = new int[rozmiar + 1];
+	int* buckets = new int[rozmiar];
 
-	for (int i = 0; i <= rozmiar + 1; i++)
+	for (int i = 0; i < rozmiar; i++)
 	{
 		//cout << "ok ";
 		buckets[i] = 0;
@@ -186,14 +187,14 @@ void bucket_sort2(int tab[], int rozmiar)
 		buckets[poz]++;
 	}
 
-	cout << "najwieksza\n";
-	for (int i = 0; i <=rozmiar+1; i++)
+	//cout << "najwieksza\n";
+	for (int i = 0; i < rozmiar; i++)
 	{
 		if (buckets[i] >= 2)
 		{
 			flaga = true;
 
-			cout << "Liczba " << i << " wystapila: " << buckets[i] << " razy. \n";
+			//cout << "Liczba " << i << " wystapila: " << buckets[i] << " razy. \n";
 
 			if (buckets[i] > buckets[porownaj])
 				porownaj = i;

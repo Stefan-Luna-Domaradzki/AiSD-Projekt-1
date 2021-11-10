@@ -1,3 +1,4 @@
 ﻿  main.cpp
-C:\Users\Stefan\Documents\GitHub\AiSD-Projekt-1\AiSD-Projekt-1\AiSD-Projekt-1\main.cpp(80,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  AiSD-Projekt-1.vcxproj -> C:\Users\Stefan\Documents\GitHub\AiSD-Projekt-1\AiSD-Projekt-1\Debug\AiSD-Projekt-1.exe
+C:\Users\Stefan\Documents\GitHub\AiSD-Projekt-1\AiSD-Projekt-1\AiSD-Projekt-1\main.cpp(64,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+LINK : fatal error LNK1168: cannot open C:\Users\Stefan\Documents\GitHub\AiSD-Projekt-1\AiSD-Projekt-1\Debug\AiSD-Projekt-1.exe for writing
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(1074,5): error MSB6006: "link.exe" exited with code 1168.
