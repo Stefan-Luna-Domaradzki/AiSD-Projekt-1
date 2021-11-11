@@ -17,8 +17,8 @@ void wypisz(int tab[], int rozmiar, double czas, string algorytm);
 
 
 void brute_force(int tab[], int rozmiar);
-void bucket_sort(int tab[], int rozmiar);
-void bucket_sort2(int tab[], int rozmiar);
+void counting(int tab[], int rozmiar);
+void counting2(int tab[], int rozmiar);
 
 int main(){
 	
@@ -127,7 +127,7 @@ void brute_force(int tab[], int rozmiar)
 		else cout << "\n Powtarza sie: " << powtarzajaca << ". \n";
 }
 
-void bucket_sort(int tab[], int rozmiar)
+void counting_sort(int tab[], int rozmiar)
 {
 	//z za³o¿enia ¿e liczby s¹ z przedzia³u 1 do n (rozmiar) 
 	//tablica wymagana do sortowania kube³kowego powinna byæ rozmiaru n
@@ -164,7 +164,7 @@ void bucket_sort(int tab[], int rozmiar)
 
 }
 
-void bucket_sort2(int tab[], int rozmiar)
+void counting2(int tab[], int rozmiar)
 {
 	int* buckets = new int[rozmiar];
 
